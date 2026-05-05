@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { User } from "../App";
 
-const API = "http://localhost:3000";
+const API = "https://socialapp-u7hp.onrender.com";
 
 type Props = {
   onLogin: (token: string, user: User) => void;
@@ -31,10 +31,14 @@ export default function AuthPage({ onLogin }: Props) {
         mode === "login"
           ? { username: data.get("username"), password: data.get("password") }
           : {
-              username: data.get("username"),
-              email: data.get("email"),
-              password: data.get("password"),
-            };
+            username: data.get("username"),
+            visibility: "public",
+            display_name: data.get("display_name"),
+            email: data.get("email"),
+            phone: data.get("phone"),
+            birthdate: data.get("birthdate"),
+            password: data.get("password"),
+          };
 
       const res = await fetch(endpoint, {
         method: "POST",
@@ -63,13 +67,13 @@ export default function AuthPage({ onLogin }: Props) {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
+    <div className="flex items-center justify-center min-h-screen p-4 bg-blue-100">
       <div className="w-full max-w-sm flex flex-col gap-4">
-        <h1 className="text-center text-2xl font-bold tracking-tight">socialapp</h1>
+        <h1 className="text-center text-3xl font-bold tracking-tight text-purple-600">Sofie Socialapp</h1>
         <Card>
           <CardHeader>
-            <CardTitle className="text-base font-medium">
-              {mode === "login" ? "Sign in to your account" : "Create an account"}
+            <CardTitle className="text-base font-semibold text-purple-700">
+              {mode === "login" ? "Welcome back 👋" : "Create your account ✨"}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -84,6 +88,24 @@ export default function AuthPage({ onLogin }: Props) {
                   required
                 />
               </div>
+              {mode === "register" && (
+                <>
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="display_name">Display name</Label>
+                    <Input id="display_name" name="display_name" required />
+                  </div>
+
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="phone">Phone</Label>
+                    <Input id="phone" name="phone" placeholder="+467..." required />
+                  </div>
+
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="birthdate">Birthdate</Label>
+                    <Input id="birthdate" name="birthdate" type="date" required />
+                  </div>
+                </>
+              )}
 
               {mode === "register" && (
                 <div className="flex flex-col gap-1.5">
@@ -123,9 +145,9 @@ export default function AuthPage({ onLogin }: Props) {
             </form>
 
             <p className="mt-4 text-center text-sm text-muted-foreground">
-              {mode === "login" ? "No account?" : "Already have an account?"}{" "}
+              {mode === "login" ? "Don't have an account?" : "Already have an account?"}{" "}
               <button type="button" onClick={toggle} className="underline text-foreground">
-                {mode === "login" ? "Register" : "Sign in"}
+                {mode === "login" ? "Sign up" : "Sign in"}
               </button>
             </p>
           </CardContent>

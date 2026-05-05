@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import type { Auth } from "../App";
 
-const API = "http://localhost:3000";
+const API = "https://socialapp-u7hp.onrender.com";
 
 type Post = {
   id: number;
@@ -105,10 +105,10 @@ export default function FeedPage({ auth, onLogout }: Props) {
   };
 
   return (
-    <div className="max-w-md mx-auto min-h-screen flex flex-col">
+    <div className="max-w-md mx-auto min-h-screen flex flex-col bg-slate-50">
       {/* Header */}
-      <header className="sticky top-0 bg-background border-b z-10 px-4 py-3 flex items-center justify-between">
-        <span className="font-semibold">socialapp</span>
+      <header className="sticky top-0 bg-blue-600 text-white border-b z-10 px-4 py-3 flex items-center justify-between">
+        <span className="font-semibold">Sofie Socialapp</span>
         <div className="flex items-center gap-3">
           <span className="text-sm text-muted-foreground">
             @{auth.user.username}
@@ -130,7 +130,7 @@ export default function FeedPage({ auth, onLogout }: Props) {
               setCreateError("");
             }}
           >
-            {showCreate ? "Cancel" : "+ New post"}
+            {showCreate ? "Cancel" : "+ Create post"}
           </Button>
 
           <div className="flex gap-2 items-center ml-auto">
@@ -153,7 +153,7 @@ export default function FeedPage({ auth, onLogout }: Props) {
 
         {/* Create post */}
         {showCreate && (
-          <Card>
+          <Card> <Card className="border-blue-200 shadow-lg bg-blue-50"></Card>
             <CardContent className="pt-5">
               <form
                 ref={formRef}
@@ -214,7 +214,7 @@ export default function FeedPage({ auth, onLogout }: Props) {
             <Card key={post.id} className="overflow-hidden">
               <CardHeader className="py-3 px-4 flex-row items-center gap-3">
                 <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-sm font-semibold shrink-0">
-                  {post.username[0].toUpperCase()}
+                  {post.username?.[0]?.toUpperCase() ?? "?"}
                 </div>
                 <span className="font-medium text-sm">@{post.username}</span>
                 <span className="ml-auto text-xs text-muted-foreground">
